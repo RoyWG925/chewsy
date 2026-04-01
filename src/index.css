@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --night: #0B0B11;
+  --surface: #16161F;
+  --surface-light: #22222E;
+  --coral: #FF5757;
+  --amber: #FFB443;
+  --mint: #1EEBB8;
+  --lavender: #8B7BF7;
+  --cream: #F0EBE3;
+  --muted: #7A7889;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--night);
+  color: var(--cream);
+  font-family: 'DM Sans', 'Noto Sans TC', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Noise texture overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 2px;
+}
+
+/* Swipe stamp animations */
+.stamp-yum {
+  position: absolute;
+  top: 40px;
+  left: 24px;
+  padding: 8px 20px;
+  border: 4px solid var(--mint);
+  border-radius: 8px;
+  color: var(--mint);
+  font-family: 'Fredoka', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  transform: rotate(-15deg);
+  z-index: 10;
+  text-shadow: 0 0 20px rgba(30, 235, 184, 0.3);
+}
+
+.stamp-nope {
+  position: absolute;
+  top: 40px;
+  right: 24px;
+  padding: 8px 20px;
+  border: 4px solid var(--coral);
+  border-radius: 8px;
+  color: var(--coral);
+  font-family: 'Fredoka', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  transform: rotate(15deg);
+  z-index: 10;
+  text-shadow: 0 0 20px rgba(255, 87, 87, 0.3);
+}
+
+/* Gradient text utility */
+.text-gradient-coral {
+  background: linear-gradient(135deg, #FF5757, #FFB443);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-mint {
+  background: linear-gradient(135deg, #1EEBB8, #8B7BF7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Ambient glow orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Card image with fallback gradient */
+.card-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Spin wheel deceleration */
+.wheel-spin {
+  transition: transform 4.5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+/* Button glow effect */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--coral), var(--amber), var(--mint));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-glow:hover::before {
+  opacity: 1;
+}
+
+/* confetti keyframes */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti-piece {
+  position: fixed;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  animation: confetti-fall linear forwards;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Progress bar shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.progress-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--coral) 0%,
+    var(--amber) 25%,
+    var(--coral) 50%,
+    var(--amber) 75%,
+    var(--coral) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
